@@ -1,0 +1,24 @@
+[package]
+name = "sn3193"
+version = "0.1.0"
+edition = "2021"
+description = "Driver for SN3193 3-Channel Fun LED Driver"
+license = "MIT"
+repository = ""
+readme = "README.md"
+keywords = ["embedded", "i2c", "driver", "LED", "SN3193"]
+categories = ["no-std", "embedded"]
+
+[lib]
+name = "sn3193"
+path = "src/lib.rs"
+crate-type = ["lib"]
+test = true
+bench = false
+doctest = false
+
+[dependencies]
+embedded-hal = { version = "1.0" }
+
+[dev-dependencies]
+embedded-hal-mock = "0.11"
