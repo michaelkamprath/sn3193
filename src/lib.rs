@@ -12,7 +12,7 @@
 //! ```rust
 //! use embedded_hal::delay::DelayMs;
 //! use embedded_hal::i2c::I2c;
-//! use sn3193::{SN3193Driver;
+//! use sn3193::SN3193Driver;
 //!
 //! // board setup
 //! let i2c = ...; // I2C peripheral
