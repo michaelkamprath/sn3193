@@ -19,6 +19,12 @@ doctest = false
 
 [dependencies]
 embedded-hal = { version = "1.0" }
+defmt = { version = "0.3", optional = true }
+ufmt = {version = "0.2", optional = true}
+
+[features]
+defmt = ["dep:defmt", "embedded-hal/defmt-03"]
+ufmt = ["dep:ufmt"]
 
 [dev-dependencies]
 embedded-hal-mock = "0.11"
