@@ -232,7 +232,7 @@ where
 }
 
 #[cfg(feature = "ufmt")]
-impl<I2C> ufmt::uDisplay for CharacterDisplayError<I2C>
+impl<I2C> ufmt::uDisplay for SN3193Error<I2C>
 where
     I2C: i2c::I2c,
 {
@@ -296,13 +296,13 @@ where
     pub fn init(&mut self) -> Result<&mut Self, SN3193Error<I2C>> {
         // start up sequence
         // wait for power up
-        self.delay.delay_ms(50);
+        self.delay.delay_ms(10);
         // reset
         self.i2c
             .write(self.address, &[REGISTER_RESET])
             .map_err(SN3193Error::I2CError)?;
 
-        self.delay.delay_ms(50);
+        self.delay.delay_ms(10);
         self.i2c
             .write(
                 self.address,
@@ -312,7 +312,7 @@ where
                 ],
             )
             .map_err(SN3193Error::I2CError)?;
-
+        self.delay.delay_ms(50);
         // set mode 0 (PWM)
         self.set_led_mode(LEDModeSettings::PWM)?;
 
@@ -326,11 +326,12 @@ where
     /// Set the mode of the LED, either PWM or Breathing.
     pub fn set_led_mode(&mut self, mode: LEDModeSettings) -> Result<&mut Self, SN3193Error<I2C>> {
         // things seem to work better with a small delay here, but it's not in the datasheet
-        self.delay.delay_ms(1);
+        self.delay.delay_ms(10);
 
         self.i2c
             .write(self.address, &[REGISTER_LED_MODE, mode as u8])
             .map_err(SN3193Error::I2CError)?;
+        self.delay.delay_ms(10);
         Ok(self)
     }
 
@@ -342,6 +343,7 @@ where
         self.i2c
             .write(self.address, &[REGISTER_CURRENT_SETTING, current as u8])
             .map_err(SN3193Error::I2CError)?;
+        self.delay.delay_ms(5);
         Ok(self)
     }
 
@@ -379,17 +381,17 @@ where
         led3: u8,
     ) -> Result<&mut Self, SN3193Error<I2C>> {
         // things seem to work better with a small delay here, but it's not in the datasheet
-        self.delay.delay_ms(1);
+        self.delay.delay_ms(2);
         self.i2c
             .write(self.address, &[REGISTER_LED1_PWM, led1])
             .map_err(SN3193Error::I2CError)?;
         // things seem to work better with a small delay here, but it's not in the datasheet
-        self.delay.delay_ms(1);
+        self.delay.delay_ms(2);
         self.i2c
             .write(self.address, &[REGISTER_LED2_PWM, led2])
             .map_err(SN3193Error::I2CError)?;
         // things seem to work better with a small delay here, but it's not in the datasheet
-        self.delay.delay_ms(1);
+        self.delay.delay_ms(2);
         self.i2c
             .write(self.address, &[REGISTER_LED3_PWM, led3])
             .map_err(SN3193Error::I2CError)?;
@@ -437,6 +439,7 @@ where
         self.i2c
             .write(self.address, &[REGISTER_DATA_UPDATE, 0xFF])
             .map_err(SN3193Error::I2CError)?;
+        self.delay.delay_ms(5);
         Ok(self)
     }
 
@@ -447,6 +450,7 @@ where
         self.i2c
             .write(self.address, &[REGISTER_TIME_UPDATE, 0xFF])
             .map_err(SN3193Error::I2CError)?;
+        self.delay.delay_ms(5);
         Ok(self)
     }
 
@@ -457,10 +461,11 @@ where
         value: u8,
     ) -> Result<&mut Self, SN3193Error<I2C>> {
         // things seem to work better with a small delay here, but it's not in the datasheet
-        self.delay.delay_ms(1);
+        self.delay.delay_ms(5);
         self.i2c
             .write(self.address, &[register, value])
             .map_err(SN3193Error::I2CError)?;
+        self.delay.delay_ms(5);
         Ok(self)
     }
 }
