@@ -1,4 +1,5 @@
 # SN3193 Driver for Rust
+[![crates.io](https://img.shields.io/crates/v/sn3193.svg)](https://crates.io/crates/sn3193)
 <!-- cargo-sync-readme start -->
 
 This Rust `embedded-hal`-based library is a simple way to control the SN3193 RGB LED driver.
