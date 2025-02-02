@@ -1,6 +1,6 @@
 [package]
 name = "sn3193"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 description = "Driver for SN3193 3-Channel Fun LED Driver"
 license = "MIT"

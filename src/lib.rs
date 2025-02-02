@@ -435,22 +435,22 @@ where
     /// Load the register data. This is used to update the LEDs after changing the PWM levels. Private method.
     fn load_register_data(&mut self) -> Result<&mut Self, SN3193Error<I2C>> {
         // things seem to work better with a small delay here, but it's not in the datasheet
-        self.delay.delay_ms(1);
+        self.delay.delay_ms(10);
         self.i2c
             .write(self.address, &[REGISTER_DATA_UPDATE, 0xFF])
             .map_err(SN3193Error::I2CError)?;
-        self.delay.delay_ms(5);
+        self.delay.delay_ms(30);
         Ok(self)
     }
 
     /// Load the breathing time data. This is used to update the LEDs after changing the breathing times. Private method.
     fn load_register_time_data(&mut self) -> Result<&mut Self, SN3193Error<I2C>> {
         // things seem to work better with a small delay here, but it's not in the datasheet
-        self.delay.delay_ms(1);
+        self.delay.delay_ms(10);
         self.i2c
             .write(self.address, &[REGISTER_TIME_UPDATE, 0xFF])
             .map_err(SN3193Error::I2CError)?;
-        self.delay.delay_ms(5);
+        self.delay.delay_ms(30);
         Ok(self)
     }
 
@@ -461,11 +461,11 @@ where
         value: u8,
     ) -> Result<&mut Self, SN3193Error<I2C>> {
         // things seem to work better with a small delay here, but it's not in the datasheet
-        self.delay.delay_ms(5);
+        self.delay.delay_ms(10);
         self.i2c
             .write(self.address, &[register, value])
             .map_err(SN3193Error::I2CError)?;
-        self.delay.delay_ms(5);
+        self.delay.delay_ms(30);
         Ok(self)
     }
 }
